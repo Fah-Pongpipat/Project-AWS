@@ -10,11 +10,11 @@ import { StudentsController } from './students/students.controller';
   imports: [
     TypeOrmModule.forRoot({
       type: 'mysql',
-      host: 'localhost', // ใส่ endpoint ของ RDS
+      host: 'studentdb.c30aq6k4gd00.us-east-1.rds.amazonaws.com', // ใส่ endpoint ของ RDS
       port: 3306, // ใส่ port ที่ใช้ เช่น 3306
-      username: 'root', // ชื่อผู้ใช้ของ RDS
-      password: 'Fah#piigtryz12', // รหัสผ่านของ RDS
-      database: 'student_registration', // ชื่อฐานข้อมูลใน RDS
+      username: 'admin', // ชื่อผู้ใช้ของ RDS
+      password: '64160139', // รหัสผ่านของ RDS
+      database: 'studentdb', // ชื่อฐานข้อมูลใน RDS
       entities: [Student],
       synchronize: true, // ตั้งค่าเป็น true เพื่อตั้งค่าตารางอัตโนมัติ (ใน production ให้ใช้ false)
     }),

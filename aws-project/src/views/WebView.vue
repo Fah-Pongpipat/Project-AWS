@@ -42,8 +42,8 @@
 
 <script lang="ts" setup>
 import { ref, onMounted } from 'vue'
-import studentService from '@/services/studentService'
-import type { Student } from '@/types/student'
+import studentService from '@/services/studentService' // Import the studentService
+import type { Student } from '@/types/student' // Import the Student type
 
 const name = ref('')
 const role = ref('student')
@@ -52,14 +52,15 @@ const students = ref<Student[]>([])
 async function submitData() {
   if (name.value && role.value) {
     const student: Student = {
+      id: 0, // Add missing properties
       name: name.value,
-      role: role.value,
-      userId: 0, // ชั่วคราวตั้งค่าเป็น 0 หรือสามารถละไว้ได้
+      role: role.value as 'student' | 'teacher',
+      user_id: 0, // Add missing properties
     }
     try {
-      const response = await studentService.createStudent(student) // เรียกใช้ service
-      students.value.push(response) // ใช้ response ที่ส่งกลับจาก API
-      resetForm() // Reset form fields after submission
+      const response = await studentService.createStudent(student)
+      students.value.push(response.data) // Use response.data to access the actual student data
+      resetForm()
     } catch (error) {
       console.error('Error:', error)
     }
@@ -70,8 +71,8 @@ async function submitData() {
 
 async function loadStudents() {
   try {
-    const response = await studentService.getAllStudents() // เรียกใช้ service
-    students.value = response // Assign fetched data to students array
+    const response = await studentService.getAllStudents() // Use the studentService to fetch students
+    students.value = response.data // Assign fetched data to students array
   } catch (error) {
     console.error('Error:', error)
   }

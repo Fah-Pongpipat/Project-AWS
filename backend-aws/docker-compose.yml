@@ -1,0 +1,28 @@
+services:
+  frontend:
+    build:
+      context: ../aws-project
+      dockerfile: Dockerfile
+    ports:
+      - "8080:8080"
+
+# ซ้าย = host 
+# ขวา = container
+
+  backend:
+    container_name: nest-app
+    build:
+      dockerfile: Dockerfile  # ใช้ Dockerfile ที่อยู่ใน directory ของ backend
+    ports:
+      - "3000:3000"  # แมพพอร์ต 3000 ของ container ไปยังพอร์ต 3000 ของเครื่องโฮสต์
+    volumes:
+      - ./:/usr/src/app  # แมพ source code ของ backend จากโฮสต์ไปยัง container
+    environment:
+      - NODE_ENV=development  # ระบุว่าเป็น environment สำหรับการพัฒนา
+    networks:
+      - my_bridge_network  # Connect frontend to the custom bridge network
+
+
+networks:
+  my_bridge_network:
+    driver: bridge  # Create a custom bridge network
